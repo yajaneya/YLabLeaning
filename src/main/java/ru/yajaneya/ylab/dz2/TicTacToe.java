@@ -36,9 +36,19 @@ public class TicTacToe {
                     win(player1, field);
                     break;
                 }
+                if (field.deadHeat()) {
+                    deadHeat();
+                    field.draw();
+                    break;
+                }
                 field.draw();
                 if (step(scanner, field, player2)) {
                     win(player2, field);
+                    break;
+                }
+                if (field.deadHeat()) {
+                    deadHeat();
+                    field.draw();
                     break;
                 }
             }
@@ -58,6 +68,13 @@ public class TicTacToe {
             System.out.println("*****************");
             break;
         }
+    }
+
+
+    private static void deadHeat() {
+        System.out.println("**************");
+        System.out.println("*** НИЧЬЯ! ***");
+        System.out.println("**************");
     }
 
     private static void win(Player player, Field field) {

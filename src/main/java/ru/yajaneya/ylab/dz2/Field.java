@@ -56,6 +56,16 @@ public class Field {
         return true;
     }
 
+    public boolean deadHeat () {
+        for (int i = 0; i < fieldSize; i ++) {
+            for (int j = 0; j < fieldSize; j++) {
+                if (field[i][j] == SYMBOL_FIELD)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     /*
       Метод проверки универсален для различных размеров поля и различного количества символов для победы.
       Взят с моих прошлых наработок.
