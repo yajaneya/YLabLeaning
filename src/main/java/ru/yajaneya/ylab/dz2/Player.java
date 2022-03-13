@@ -4,12 +4,14 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 public class Player {
+    private int id;
     private String name;
     private char symbol;
     private int rating;
 
 
-    public Player(String name, char symbol) {
+    public Player(int id, String name, char symbol) {
+        this.id = id;
         this.name = name;
         this.symbol = symbol;
     }
@@ -17,6 +19,10 @@ public class Player {
     public Player(int rating, String name) {
         this.name = name;
         this.rating = rating;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -35,10 +41,5 @@ public class Player {
         this.rating = rating;
     }
 
-    public static final Comparator<Player> COMPARE_BY_RATING = new Comparator<Player>() {
-        @Override
-        public int compare(Player lhs, Player rhs) {
-            return rhs.getRating() - lhs.getRating();
-        }
-    };
+    public static final Comparator<Player> COMPARE_BY_RATING = (lhs, rhs) -> rhs.getRating() - lhs.getRating();
 }
