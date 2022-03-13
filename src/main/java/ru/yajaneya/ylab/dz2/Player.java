@@ -1,13 +1,16 @@
+/*
+Класс, описывающий игрока игры "Крестики-нолики"
+ */
+
 package ru.yajaneya.ylab.dz2;
 
-import java.io.Serializable;
 import java.util.Comparator;
 
 public class Player {
-    private int id;
-    private String name;
-    private char symbol;
-    private int rating;
+    private int id; // идентификатор игрока
+    private String name; // имя игрока
+    private char symbol; // символ, который ставит игрок на поле
+    private int rating; // рейтинг игрока -> отражает количество выигранных партий.
 
 
     public Player(int id, String name, char symbol) {

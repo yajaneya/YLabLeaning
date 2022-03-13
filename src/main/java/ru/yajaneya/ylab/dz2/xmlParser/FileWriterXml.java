@@ -1,23 +1,34 @@
-package ru.yajaneya.ylab.dz2;
+/*
+Этот класс предоставляет API для создания и заполнения xml-файла
+данными об прошедших играх двух игроков до выхода из программы.
+Класс выполнен средствами записи в файл.
+Файлы именуются в виде game[X].xml, где X - номер партии в игре.
+Например, game1.xml
+При каждом входе в программу отчест партий идет сначала.
+ */
+
+package ru.yajaneya.ylab.dz2.xmlParser;
+
+import ru.yajaneya.ylab.dz2.Player;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WriterXml {
+public class FileWriterXml implements WriterXml{
     private String outFile;
     private FileWriter fileWriter;
     private int step;
 
 
-    public WriterXml(String outFile) {
+    public FileWriterXml(String outFile) {
         this.outFile = outFile;
         step = 1;
     }
 
     public boolean startGame(Player player1, Player player2) {
         try {
-            fileWriter = new FileWriter("." + File.separator + outFile);
+            fileWriter = new FileWriter("." + File.separator + outFile); //TODO Реализовать наименование файла в виде gameNamePlayer1NamePlayer2NumberGame.xml
             writeToFile("<?xml version=\"1.0\" encoding=\"windows-1251\"?>");
             writeToFile("<Gameplay>");
             writeToFile("   <Player id=\"" + player1.getId() + "\" name=\"" + player1.getName()

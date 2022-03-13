@@ -16,7 +16,11 @@
 Вести рейтинг участников в файле.
  */
 
+
+
 package ru.yajaneya.ylab.dz2;
+
+import ru.yajaneya.ylab.dz2.xmlParser.FileWriterXml;
 
 import java.util.Scanner;
 
@@ -24,7 +28,7 @@ public class TicTacToe {
     private static int countGames = 1;
     private static Player player1;
     private static Player player2;
-    private static WriterXml writerXml;
+    private static ru.yajaneya.ylab.dz2.xmlParser.WriterXml WriterXml;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -40,25 +44,25 @@ public class TicTacToe {
                 field.draw();
                 if (step(scanner, field, player1)) {
                     win(player1, field);
-                    writerXml.endGame(player1);
+                    WriterXml.endGame(player1);
                     break;
                 }
                 if (field.deadHeat()) {
                     deadHeat();
                     field.draw();
-                    writerXml.endGame(null);
+                    WriterXml.endGame(null);
                     break;
                 }
                 field.draw();
                 if (step(scanner, field, player2)) {
                     win(player2, field);
-                    writerXml.endGame(player2);
+                    WriterXml.endGame(player2);
                     break;
                 }
                 if (field.deadHeat()) {
                     deadHeat();
                     field.draw();
-                    writerXml.endGame(null);
+                    WriterXml.endGame(null);
                     break;
                 }
             }
@@ -81,8 +85,8 @@ public class TicTacToe {
     }
 
     private static void startGameXml () {
-        writerXml = new WriterXml("game" + countGames++ + ".xml");
-        writerXml.startGame(player1, player2);
+        WriterXml = new FileWriterXml("game" + countGames++ + ".xml");
+        WriterXml.startGame(player1, player2);
     }
 
     private static void deadHeat() {
@@ -111,7 +115,7 @@ public class TicTacToe {
             System.out.println("Ячейка занята или лежит за пределами поля. Повторите ход...");
             step(scanner, field, player);
         }
-        writerXml.stepGame(player, x, y);
+        WriterXml.stepGame(player, x, y);
         return field.win(player);
     }
 

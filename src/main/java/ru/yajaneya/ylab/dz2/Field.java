@@ -1,3 +1,7 @@
+/*
+Класс предоставляет API игрового поля игры "Крестики-нолики"
+ */
+
 package ru.yajaneya.ylab.dz2;
 
 import java.io.*;
@@ -115,9 +119,8 @@ public class Field {
         File file = new File("." + File.separator + RATING_FILE);
         try {
             List<Player> rating = getRating(file);
-            Boolean addRatig = false;
-            for (int i = 0; i < rating.size(); i++) {
-                Player pl = rating.get(i);
+            boolean addRatig = false;
+            for (Player pl : rating) {
                 if (pl.getName().equals(player.getName())) {
                     pl.setRating(pl.getRating() + 1);
                     addRatig = true;
@@ -139,8 +142,7 @@ public class Field {
          File file = new File("." + File.separator + RATING_FILE);
          try {
              List<Player> players = getRating(file);
-             for (int i = 0; i<players.size(); i++) {
-                 Player player = players.get(i);
+             for (Player player : players) {
                  System.out.println((player.getName() + " " + player.getRating()));
              }
          } catch (IOException e) {
@@ -164,15 +166,14 @@ public class Field {
 
     private void putRating (File file, List<Player> list) throws IOException {
         FileWriter fileWriter = new FileWriter(file);
-        for (int i = 0; i<list.size(); i++) {
-            Player player = list.get(i);
+        for (Player player : list) {
             fileWriter.write(player.getName() + " " + player.getRating() + "\n");
         }
         fileWriter.close();
     }
 
     private List sortRating(List<Player> list) throws IOException {
-        Collections.sort(list, Player.COMPARE_BY_RATING);
+        list.sort(Player.COMPARE_BY_RATING);
         return list;
     }
 
