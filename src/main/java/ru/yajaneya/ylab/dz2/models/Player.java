@@ -2,7 +2,7 @@
 Класс, описывающий игрока игры "Крестики-нолики"
  */
 
-package ru.yajaneya.ylab.dz2;
+package ru.yajaneya.ylab.dz2.models;
 
 import java.util.Comparator;
 
@@ -42,6 +42,16 @@ public class Player {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", symbol=" + symbol +
+                ", rating=" + rating +
+                '}';
     }
 
     public static final Comparator<Player> COMPARE_BY_RATING = (lhs, rhs) -> rhs.getRating() - lhs.getRating();

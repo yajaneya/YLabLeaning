@@ -1,6 +1,6 @@
 /*
 Этот класс предоставляет API для создания и заполнения xml-файла
-данными об прошедших играх двух игроков до выхода из программы.
+данными о прошедших играх двух игроков до выхода из программы.
 Класс выполнен средствами записи в файл.
 Файлы именуются в виде game[X].xml, где X - номер партии в игре.
 Например, game1.xml
@@ -9,7 +9,7 @@
 
 package ru.yajaneya.ylab.dz2.xmlParser;
 
-import ru.yajaneya.ylab.dz2.Player;
+import ru.yajaneya.ylab.dz2.models.Player;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -26,9 +26,19 @@ public class FileWriterXml implements WriterXml{
         step = 1;
     }
 
+    @Override
+    public boolean init() {
+        try {
+            fileWriter = new FileWriter("." + File.separator + "arhiv" + File.separator + outFile); //TODO Реализовать наименование файла в виде gameNamePlayer1NamePlayer2NumberGame.xml
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    @Override
     public boolean startGame(Player player1, Player player2) {
         try {
-            fileWriter = new FileWriter("." + File.separator + outFile); //TODO Реализовать наименование файла в виде gameNamePlayer1NamePlayer2NumberGame.xml
             writeToFile("<?xml version=\"1.0\" encoding=\"windows-1251\"?>");
             writeToFile("<Gameplay>");
             writeToFile("   <Player id=\"" + player1.getId() + "\" name=\"" + player1.getName()
@@ -42,6 +52,7 @@ public class FileWriterXml implements WriterXml{
         }
     }
 
+    @Override
     public boolean stepGame(Player player, int x, int y) {
         try {
             writeToFile("       <Step num=\"" + step++ + "\" playerId=\"" + player.getId()
@@ -52,6 +63,7 @@ public class FileWriterXml implements WriterXml{
         }
     }
 
+    @Override
     public boolean endGame(Player player) {
         try {
             writeToFile("   </Game>");

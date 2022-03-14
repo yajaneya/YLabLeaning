@@ -2,7 +2,7 @@
 Класс предоставляет API игрового поля игры "Крестики-нолики"
  */
 
-package ru.yajaneya.ylab.dz2;
+package ru.yajaneya.ylab.dz2.models;
 
 import java.io.*;
 import java.util.*;
