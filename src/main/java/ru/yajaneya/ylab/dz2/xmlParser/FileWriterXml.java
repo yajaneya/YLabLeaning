@@ -28,6 +28,11 @@ public class FileWriterXml implements WriterXml{
 
     @Override
     public boolean init() {
+        File folder = new File("." +
+                File.separator + "arhiv");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
         try {
             fileWriter = new FileWriter("." + File.separator + "arhiv" + File.separator + outFile); //TODO Реализовать наименование файла в виде gameNamePlayer1NamePlayer2NumberGame.xml
             return true;
