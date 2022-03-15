@@ -11,13 +11,11 @@ package ru.yajaneya.ylab.dz2.xmlParser;
 
 import ru.yajaneya.ylab.dz2.models.Player;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class FileWriterXml implements WriterXml{
     private String outFile;
-    private FileWriter fileWriter;
+    private OutputStreamWriter fileWriter;
     private int step;
 
 
@@ -34,7 +32,9 @@ public class FileWriterXml implements WriterXml{
             folder.mkdir();
         }
         try {
-            fileWriter = new FileWriter("." + File.separator + "arhiv" + File.separator + outFile); //TODO Реализовать наименование файла в виде gameNamePlayer1NamePlayer2NumberGame.xml
+            fileWriter = new OutputStreamWriter(new FileOutputStream(
+                    "." + File.separator + "arhiv" + File.separator + outFile),
+                    "windows-1251");
             return true;
         } catch (IOException e) {
             return false;
