@@ -31,9 +31,12 @@ public class GameViewer {
         }
 
         ReaderXml readerXml = new DomReaderXml(file); //устанавливается тип xml-парсера
-        readerXml.init();
+        if (!readerXml.init()) return;
         List<Player> players = readerXml.getPlayers();
         List<Step> steps = readerXml.getSteps();
+        if (steps == null) {
+            return;
+        }
         Player winPlayer = readerXml.getResult();
         Player player1 = players.get(0);
         Player player2 = players.get(1);

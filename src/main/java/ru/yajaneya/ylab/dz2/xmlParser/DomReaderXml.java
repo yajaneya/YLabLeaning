@@ -13,6 +13,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.yajaneya.ylab.dz2.models.Player;
 import ru.yajaneya.ylab.dz2.models.Step;
+import ru.yajaneya.ylab.dz2.xmlParser.pozitionAdapter.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,10 +22,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class DomReaderXml implements ReaderXml{
     File file;
     Document document;
+    PozitionAdapter pozitionAdapter;
 
     public DomReaderXml(String file) {
         this.file = new File(file);
@@ -40,9 +43,41 @@ public class DomReaderXml implements ReaderXml{
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             document = builder.parse(file);
-            return true;
+            return choiceTypePozition();
         } catch ( ParserConfigurationException | SAXException | IOException e) {
             return false;
+        }
+    }
+
+    private boolean choiceTypePozition() {
+        System.out.println("Поддерживаются следующие форматы записи координат в файле истории игры: ");
+        System.out.println("1 - x, y");
+        System.out.println("2 - x y");
+        System.out.println("3 - xy (размер поля не более 9х9)");
+        System.out.println("4 - нумерация ячеек в следующем виде: ");
+        System.out.println("    1 2 3 ");
+        System.out.println("    4 5 6 ");
+        System.out.println("    7 8 9 ");
+        System.out.println("---------------------------------------");
+        System.out.println("Укажите нужный формат: ");
+        Scanner scanner = new Scanner(System.in);
+        switch (scanner.nextInt()) {
+            case (1):
+                pozitionAdapter = new PozitionOne();
+                return true;
+            case (2):
+                pozitionAdapter = new PozitionTwo();
+                return true;
+            case (3):
+                pozitionAdapter = new PozitionThree();
+                return true;
+            case (4):
+                pozitionAdapter = new PozitionFour();
+                return true;
+            default:
+                System.out.println("Такого варианта нет.");
+                System.out.println("Обратитесь к разработчику для добавления соответствующего модуля.");
+                return false;
         }
     }
 
@@ -76,10 +111,18 @@ public class DomReaderXml implements ReaderXml{
                     playerId = Integer.parseInt(attr.getNodeValue());
                 }
             }
-            String[] content = node.getTextContent().split(",");
-            x = Integer.parseInt(content[0]);
-            y = Integer.parseInt(content[1]);
+
+            try {
+                int [] pozition = pozitionAdapter.getPozition(node.getTextContent());
+                x = pozition[0];
+                y = pozition[1];
+            } catch (NumberFormatException e) {
+                System.out.println("Выбран неправильный формат записи координат в файле истории игры.");
+                return null;
+            }
+
             steps.add(new Step(num, playerId, x, y));
+
         }
         return steps;
     }

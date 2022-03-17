@@ -118,8 +118,9 @@ public class TicTacToe {
         if (!field.move(player, x, y)) {
             System.out.println("Ячейка занята или лежит за пределами поля. Повторите ход...");
             step(scanner, field, player);
+        } else {
+            writerXml.stepGame(player, x, y);
         }
-        writerXml.stepGame(player, x, y);
         return field.win(player);
     }
 
