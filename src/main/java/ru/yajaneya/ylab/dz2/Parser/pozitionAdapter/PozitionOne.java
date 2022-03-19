@@ -2,7 +2,7 @@
 Работа с координатами в виде x,y
  */
 
-package ru.yajaneya.ylab.dz2.xmlParser.pozitionAdapter;
+package ru.yajaneya.ylab.dz2.Parser.pozitionAdapter;
 
 public class PozitionOne implements PozitionAdapter{
 

@@ -5,7 +5,7 @@
 7 8 9
  */
 
-package ru.yajaneya.ylab.dz2.xmlParser.pozitionAdapter;
+package ru.yajaneya.ylab.dz2.Parser.pozitionAdapter;
 
 public class PozitionFour implements PozitionAdapter{
 

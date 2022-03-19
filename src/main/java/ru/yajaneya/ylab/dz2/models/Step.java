@@ -17,6 +17,9 @@ public class Step {
         this.y = y;
     }
 
+    public Step() {
+    }
+
     public int getPlayerId() {
         return playerId;
     }
@@ -27,6 +30,26 @@ public class Step {
 
     public int getY() {
         return y;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     @Override
