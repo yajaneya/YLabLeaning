@@ -26,8 +26,11 @@ public class ReaderParserJson implements ReaderParser{
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(file), "windows-1251");
             BufferedReader fileReader = new BufferedReader(inputStreamReader);
-
-            jsonStr = fileReader.readLine();
+            String line = "";
+            jsonStr = "";
+            while ((line = fileReader.readLine()) != null) {
+                jsonStr += line;
+            }
             ObjectMapper mapper = new ObjectMapper();
             jsonGamePlay = new JsonGamePlay();
             jsonGamePlay = mapper.readValue(jsonStr, JsonGamePlay.class);

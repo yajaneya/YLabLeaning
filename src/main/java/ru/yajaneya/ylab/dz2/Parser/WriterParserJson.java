@@ -59,7 +59,7 @@ public class WriterParserJson implements WriterParser {
         gameplay.setGameResult(gameResult);
         JsonGamePlay jsonGamePlay = new JsonGamePlay(gameplay);
         try {
-            String jsonStr = mapper.writeValueAsString(jsonGamePlay);
+            String jsonStr = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(jsonGamePlay);
             return writeToFile(jsonStr);
         } catch (JsonProcessingException e) {
             return false;
