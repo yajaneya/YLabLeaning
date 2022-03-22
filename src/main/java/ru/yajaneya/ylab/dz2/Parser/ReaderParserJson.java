@@ -34,7 +34,6 @@ public class ReaderParserJson implements ReaderParser{
             ObjectMapper mapper = new ObjectMapper();
             jsonGamePlay = new JsonGamePlay();
             jsonGamePlay = mapper.readValue(jsonStr, JsonGamePlay.class);
-            System.out.println(jsonStr);
             return true;
         } catch (IOException e) {
             return false;

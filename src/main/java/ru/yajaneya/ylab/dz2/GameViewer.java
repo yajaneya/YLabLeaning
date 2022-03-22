@@ -19,17 +19,19 @@ import java.io.File;
 import java.util.List;
 
 public class GameViewer {
-    private static File file; // задается имя файла
 
     public static void main(String[] args) {
 
         JFileChooser fileopen = new JFileChooser("./arhiv/");
         int ret = fileopen.showDialog(null, "Открыть файл");
         if (ret == JFileChooser.APPROVE_OPTION) {
-           file = fileopen.getSelectedFile();
-            System.out.println(file.getPath());
+           File file = fileopen.getSelectedFile();
+           viewer(file);
         }
 
+    }
+
+    public static void viewer(File file) {
         ReaderParser readerParser = new HistoryFabric().getReadParser(); //устанавливается парсес чтения
         if (!readerParser.init(file)) return;
         List<Player> players = readerParser.getPlayers();
@@ -66,7 +68,6 @@ public class GameViewer {
         } else {
             System.out.println("Победитель: " + winPlayer.getName());
         }
-
     }
 
     private static Player getPlayerById (List<Player> players, int id) {
