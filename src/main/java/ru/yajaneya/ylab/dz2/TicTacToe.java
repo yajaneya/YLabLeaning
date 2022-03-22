@@ -16,17 +16,30 @@
 Вести рейтинг участников в файле.
  */
 
+
+
 package ru.yajaneya.ylab.dz2;
+
+import ru.yajaneya.ylab.dz2.models.Field;
+import ru.yajaneya.ylab.dz2.models.Player;
+import ru.yajaneya.ylab.dz2.xmlParser.FileWriterXml;
+import ru.yajaneya.ylab.dz2.xmlParser.WriterXml;
 
 import java.util.Scanner;
 
 public class TicTacToe {
+    private static int countGames = 1;
+    private static Player player1;
+    private static Player player2;
+    private static WriterXml writerXml;
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Первый игрок, введите своё имя: ");
-        Player player1 = new Player(scanner.nextLine(),'х');
+        player1 = new Player(1, scanner.nextLine(),'х');
         System.out.print("Второй игрок, введите своё имя: ");
-        Player player2 = new Player(scanner.nextLine(), '0');
+        player2 = new Player(2, scanner.nextLine(), '0');
+        startGameXml();
         Field field = new Field();
 
         while (true) {
@@ -34,25 +47,28 @@ public class TicTacToe {
                 field.draw();
                 if (step(scanner, field, player1)) {
                     win(player1, field);
+                    writerXml.endGame(player1);
                     break;
                 }
                 if (field.deadHeat()) {
                     deadHeat();
                     field.draw();
+                    writerXml.endGame(null);
                     break;
                 }
                 field.draw();
                 if (step(scanner, field, player2)) {
                     win(player2, field);
+                    writerXml.endGame(player2);
                     break;
                 }
                 if (field.deadHeat()) {
                     deadHeat();
                     field.draw();
+                    writerXml.endGame(null);
                     break;
                 }
             }
-
             System.out.println();
             System.out.print("Сыграем ещё раз? (да/нет): ");
             String  answer = scanner.nextLine();
@@ -61,6 +77,7 @@ public class TicTacToe {
             }
             if (answer.equals("да")) {
                 field.init();
+                startGameXml();
                 continue;
             }
             System.out.println("*****************");
@@ -70,6 +87,11 @@ public class TicTacToe {
         }
     }
 
+    private static void startGameXml () {
+        writerXml = new FileWriterXml("game" + countGames++ + ".xml");
+        writerXml.init();
+        writerXml.startGame(player1, player2);
+    }
 
     private static void deadHeat() {
         System.out.println("**************");
@@ -90,15 +112,16 @@ public class TicTacToe {
         System.out.println("--- --- ---");
         System.out.println(player.getName() + " ходит:");
         System.out.print("Введите координату x: ");
-        int x = scanner.nextInt();
+        int x = scanner.nextInt(); // TODO проверка на ввод символа
         System.out.print("Введите координату y: ");
-        int y = scanner.nextInt();
+        int y = scanner.nextInt(); // TODO проверка на ввод символа
         if (!field.move(player, x, y)) {
             System.out.println("Ячейка занята или лежит за пределами поля. Повторите ход...");
             step(scanner, field, player);
+        } else {
+            writerXml.stepGame(player, x, y);
         }
         return field.win(player);
     }
-
 
 }
