@@ -2,43 +2,49 @@
 Этот класс предоставляет API для создания и заполнения xml-файла
 данными о прошедших играх двух игроков до выхода из программы.
 Класс выполнен средствами записи в файл.
-Файлы именуются в виде game[X].xml, где X - номер партии в игре.
-Например, game1.xml
-При каждом входе в программу отчест партий идет сначала.
+Файлы именуются в виде game[name1][name2][X].xml,
+где name1 - имя 1го игрока, name2 - имя второго игрока,
+    X - номер партии в игре (берется следующий номер для этих игроков в каталоге).
+Например, gameВасилийПетр1.xml
  */
 
-package ru.yajaneya.ylab.dz2.xmlParser;
+package ru.yajaneya.ylab.dz2.Parser;
 
 import ru.yajaneya.ylab.dz2.models.Player;
 
 import java.io.*;
 
-public class FileWriterXml implements WriterXml{
+public class FileWriterParserXml implements WriterParser {
     private String outFile;
     private OutputStreamWriter fileWriter;
     private int step;
 
-
-    public FileWriterXml(String outFile) {
-        this.outFile = outFile;
-        step = 1;
-    }
-
     @Override
-    public boolean init() {
-        File folder = new File("." +
-                File.separator + "arhiv");
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
+    public boolean init(String name1, String name2) {
+        this.outFile = outFile + ".xml";
+        step = 1;
         try {
             fileWriter = new OutputStreamWriter(new FileOutputStream(
-                    "." + File.separator + "arhiv" + File.separator + outFile),
+                    createFileName("game" + name1 + name2)),
                     "windows-1251");
             return true;
         } catch (IOException e) {
             return false;
         }
+    }
+
+    private File createFileName(String outFile) {
+        File folder = new File("." +
+                File.separator + "arhiv");
+        if (!folder.exists()) {
+            folder.mkdir();
+        }
+        int count = 1;
+        File file;
+        do {
+            file = new File("." + File.separator + "arhiv" + File.separator + outFile + count++ + ".xml");
+        } while (file.exists());
+        return file;
     }
 
     @Override

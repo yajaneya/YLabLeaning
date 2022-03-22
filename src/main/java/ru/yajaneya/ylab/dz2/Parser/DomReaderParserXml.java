@@ -4,7 +4,7 @@
     данных о прошедших играх.
  */
 
-package ru.yajaneya.ylab.dz2.xmlParser;
+package ru.yajaneya.ylab.dz2.Parser;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -13,7 +13,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import ru.yajaneya.ylab.dz2.models.Player;
 import ru.yajaneya.ylab.dz2.models.Step;
-import ru.yajaneya.ylab.dz2.xmlParser.pozitionAdapter.*;
+import ru.yajaneya.ylab.dz2.Parser.pozitionAdapter.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,21 +24,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class DomReaderXml implements ReaderXml{
+public class DomReaderParserXml implements ReaderParser {
     File file;
     Document document;
     PozitionAdapter pozitionAdapter;
 
-    public DomReaderXml(String file) {
-        this.file = new File(file);
-    }
-
-    public DomReaderXml(File file) {
-        this.file = file;
-    }
-
     @Override
-    public boolean init() {
+    public boolean init(File file) {
+        this.file = file;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -58,6 +51,7 @@ public class DomReaderXml implements ReaderXml{
         System.out.println("    1 2 3 ");
         System.out.println("    4 5 6 ");
         System.out.println("    7 8 9 ");
+        System.out.println("5 - нет нужного формата");
         System.out.println("---------------------------------------");
         System.out.println("Укажите нужный формат: ");
         Scanner scanner = new Scanner(System.in);
@@ -74,6 +68,9 @@ public class DomReaderXml implements ReaderXml{
             case (4):
                 pozitionAdapter = new PozitionFour();
                 return true;
+            case (5):
+                System.out.println("Обратитесь к разработчику для добавления соответствующего модуля.");
+                return false;
             default:
                 System.out.println("Такого варианта нет.");
                 System.out.println("Обратитесь к разработчику для добавления соответствующего модуля.");

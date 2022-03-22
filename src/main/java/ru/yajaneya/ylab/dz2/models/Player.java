@@ -24,6 +24,9 @@ public class Player {
         this.rating = rating;
     }
 
+    public Player() {
+    }
+
     public int getId() {
         return id;
     }
@@ -42,6 +45,18 @@ public class Player {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSymbol(char symbol) {
+        this.symbol = symbol;
     }
 
     @Override

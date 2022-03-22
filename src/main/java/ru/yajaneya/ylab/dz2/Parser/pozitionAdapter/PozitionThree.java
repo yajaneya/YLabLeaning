@@ -2,7 +2,7 @@
 Работа с координатами в виде xy для поля размером до 9х9
  */
 
-package ru.yajaneya.ylab.dz2.xmlParser.pozitionAdapter;
+package ru.yajaneya.ylab.dz2.Parser.pozitionAdapter;
 
 public class PozitionThree implements PozitionAdapter{
 
